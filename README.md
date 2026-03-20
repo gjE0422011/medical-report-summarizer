@@ -3,7 +3,7 @@
 AI-powered app that reads medical PDF reports and explains 
 them in plain English using Mistral 7B via Hugging Face.
 
-**Live App:** [your-link-here]
+**Live App:** https://medical-report-summarizer-k3ych9dpa5aqjkvzodmnzd.streamlit.app/
 
 ## Features
 - Upload any medical PDF
