@@ -33,7 +33,11 @@ def summarize_report(token, report_text):
         token=token
     )
 
-    prompt = f"""<s>[INST] You are a medical assistant helping patients understand their reports.
+    response = client.chat_completion(
+        messages=[
+            {
+                "role": "user",
+                "content": f"""You are a medical assistant helping patients understand their reports.
 
 Here is a medical report:
 {report_text[:3000]}
@@ -47,15 +51,15 @@ Give a structured summary with these sections:
 5. **Suggested Next Steps** - what the patient should do
 6. **Urgency Level** - one of: 🟢 Routine / 🟡 Follow Up Soon / 🔴 See Doctor Promptly
 
-End with: "This summary is for informational purposes only and does not replace professional medical advice." [/INST]"""
-
-    response = client.text_generation(
-        prompt,
-        max_new_tokens=800,
+End with: "This summary is for informational purposes only and does not replace professional medical advice."
+"""
+            }
+        ],
+        max_tokens=800,
         temperature=0.4,
-        repetition_penalty=1.1
     )
-    return response
+
+    return response.choices[0].message.content
 
 if uploaded_file and hf_token:
     if st.button("🔍 Summarize Report"):
