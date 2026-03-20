@@ -2,7 +2,6 @@ import streamlit as st
 import pymupdf
 from huggingface_hub import InferenceClient
 
-# --- Page Config ---
 st.set_page_config(
     page_title="Medical Report Summarizer",
     page_icon="🏥",
@@ -13,17 +12,14 @@ st.title("🏥 Medical Report Summarizer")
 st.markdown("Upload a medical report (PDF) and get a plain-English summary instantly.")
 st.divider()
 
-# --- Token Input ---
 hf_token = st.text_input(
     "🔑 Enter your Hugging Face Token",
     type="password",
     placeholder="hf_..."
 )
 
-# --- File Upload ---
 uploaded_file = st.file_uploader("📄 Upload Medical Report (PDF)", type=["pdf"])
 
-# --- Extract Text ---
 def extract_text(file_bytes):
     doc = pymupdf.open(stream=file_bytes, filetype="pdf")
     text = ""
@@ -31,7 +27,6 @@ def extract_text(file_bytes):
         text += page.get_text()
     return text.strip()
 
-# --- Summarize using HuggingFace ---
 def summarize_report(token, report_text):
     client = InferenceClient(
         model="mistralai/Mistral-7B-Instruct-v0.3",
@@ -62,7 +57,6 @@ End with: "This summary is for informational purposes only and does not replace 
     )
     return response
 
-# --- Main Logic ---
 if uploaded_file and hf_token:
     if st.button("🔍 Summarize Report"):
         with st.spinner("Analyzing your report... this may take 20-30 seconds"):
@@ -97,12 +91,3 @@ elif hf_token and not uploaded_file:
 
 st.divider()
 st.caption("Built with Python · Mistral 7B · Hugging Face · Streamlit  |  For informational use only.")
-```
-
----
-
-### `requirements.txt`
-```
-streamlit
-pymupdf
-huggingface_hub
