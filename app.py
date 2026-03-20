@@ -29,7 +29,7 @@ def extract_text(file_bytes):
 
 def summarize_report(token, report_text):
     client = InferenceClient(
-        model="mistralai/Mistral-7B-Instruct-v0.3",
+        model="HuggingFaceH4/zephyr-7b-beta",
         token=token
     )
 
